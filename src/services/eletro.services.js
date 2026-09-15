@@ -1,13 +1,10 @@
-import express from 'express'
-import { eletroRouter } from './routes/eletro.routes.js'
+import { pool } from "../database/db.js";
 
-const app = express()
-const port = 3000
+class EletroService {
+    async listarEletronicos() {
+        const res = await pool.query("SELECT * FROM eletronicos")
+        return res.rows
+    }
+}
 
-app.use(express.json())
-
-app.use("/eletronicos", eletroRouter)
-
-app.listen(port, () => {
-    console.log(`App rodando em http://localhost:3000`);
-})
+export const eletroService = new EletroService()

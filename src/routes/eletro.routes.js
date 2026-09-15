@@ -6,7 +6,7 @@ export const eletroRouter = Router()
 eletroRouter.get("/", async (req, res) => {
     try {
         const eletro = await eletroService.listarEletronicos()
-        res.json(eletronicos);        
+        res.json(eletro);        
     } catch (error) {
         console.error(error);        
     }

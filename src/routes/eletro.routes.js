@@ -5,52 +5,51 @@ export const eletroRouter = Router()
 
 eletroRouter.get("/", async (req, res) => {
     try {
-        const eletro = await eletroService.listarEletronicos()
-        res.json(eletro);
+        const equipamentos = await eletroService.getAll();
+        return res.status(200).json(equipamentos);
     } catch (error) {
         return res.status(500).json({ error: 'Erro interno no servidor' });
     }
-    });
+});
 
-    router.get('/:id', async (req, res) => {
+eletroRouter.get('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const eletronicos = await eletroService.getById(id);
+        const equipamento = await eletroService.getById(id);
 
-        if (!eletronicos) {
+        if (!equipamento) {
         return res.status(404).json({ message: 'equipamento não encontrado' });
         }
 
-        return res.status(200).json(eletronicos);
+        return res.status(200).json(equipamento);
     } catch (error) {
         return res.status(500).json({ error: 'Erro interno no servidor' });
     }
-    });
-    router.post('/', async (req, res) => {
+});
+
+eletroRouter.post('/', async (req, res) => {
     try {
         const { nome, tipo, disponivel } = req.body;
-        const novoEletronicos = await eletroService.create({ nome, tipo, disponivel });
-        return res.status(201).json(novoEletronicos);
+        const equipamento = await eletroService.create({ nome, tipo, disponivel });
+        return res.status(201).json(equipamento);
     } catch (error) {
         return res.status(500).json({ error: 'Erro interno no servidor' });
     }
-    });
+});
 
-    router.patch('/:id/disponibilidade', async (req, res) => {
+eletroRouter.patch('/:id/disponibilidade', async (req, res) => {
     try {
         const { id } = req.params;
         const { disponivel } = req.body;
 
-        const eletronicosAtualizado = await eletroService.updateAvailability(id, disponivel);
+        const equipamento = await eletroService.updateAvailability(id, disponivel);
 
-        if (!eletronicosAtualizado) {
-        return res.status(404).json({ message: 'eletronicos não encontrado' });
+        if (!equipamento) {
+        return res.status(404).json({ message: 'equipamento não encontrado' });
         }
 
-        return res.status(200).json(eletronicosAtualizado);
+        return res.status(200).json(equipamento);
     } catch (error) {
         return res.status(500).json({ error: 'Erro interno no servidor' });
     }
-    });
-
-module.exports = router;
+});

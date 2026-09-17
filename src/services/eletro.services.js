@@ -1,6 +1,6 @@
 import { pool } from "../database/db.js";
 
-class EletroService {
+export class EletroService {
     async getAll() {
         const query = 'SELECT * FROM equipamentos ORDER BY id ASC';
         const { rows } = await pool.query(query);
@@ -46,4 +46,4 @@ class EletroService {
     }
 }
 
-export const eletroService = new EletroService()
+export const eletroService = new EletroService();
